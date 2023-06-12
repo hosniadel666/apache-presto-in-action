@@ -47,22 +47,20 @@ Add connection to Hive Meta-store in the Hadoop cluster
 master# hive --service metastore
 ```
 
-1. On the coordinator node (Presto), you can add Hive to Presto's catalogs by including the `hive.properties` file in the directory `/opt/presto-server/etc/catalog`.
-
-In my case,`[hive.properties](http://hive.properties)` contains connector name and thrift connection to hive meta-store 
+2. On the coordinator node (Presto), you can add Hive to Presto's catalogs by including the `hive.properties` file in the directory `/opt/presto-server/etc/catalog`. In my case,`hive.properties` contains connector name and thrift connection to hive meta-store 
 
 ```
 connector.name=hive-hadoop2
 hive.metastore.uri=thrift://172.25.0.100:9083
 ```
 
-Restart the coordinator container to ensure that the configuration takes effect.
+3. Restart the coordinator container to ensure that the configuration takes effect.
 
 ```bash
 docker restart coordinator
 ```
 
-Now, you have a connection to Hive through Presto
+4. Now, you have a connection to Hive through Presto
 
 ```bash
 docker exec -it coordinator bash
@@ -90,7 +88,7 @@ presto>select count(*) from hive.test.table1;
 mysql> Create Database test;
 ```
 
-1. On the coordinator node (Presto), Add MySQL to Presto's catalogs by including the  `mysql.properties` file in the directory `/opt/presto-server/etc/catalog`. In my case, `mysql.properties` contains connector name and JDBC connection details. 
+2. On the coordinator node (Presto), Add MySQL to Presto's catalogs by including the  `mysql.properties` file in the directory `/opt/presto-server/etc/catalog`. In my case, `mysql.properties` contains connector name and JDBC connection details. 
 
 ```
 connector.name=mysql
@@ -99,13 +97,13 @@ connection-user=root
 connection-password=root
 ```
 
-1. Restart the coordinator container to ensure that the configuration takes effect.
+3. Restart the coordinator container to ensure that the configuration takes effect.
 
 ```bash
 docker restart coordinator
 ```
 
-1. Now, you have a connection to MySQL through Presto
+4. Now, you have a connection to MySQL through Presto
 
 ```bash
 docker exec -it coordinator bash
